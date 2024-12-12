@@ -16,10 +16,10 @@
     <div class="main-container">
         <div class="left-container">
             <div class="login-box">
-                <form action="produtos.html">
-                    <input type="text" placeholder="E-mail ou telefone" class="input-field" required>
-                    <input type="password" placeholder="Senha" class="input-field" required>
-                    <button type="submit" class="login-button" onclick="botaoEntrar()">Entrar</button>
+                <form action=".">
+                    <input type="text" placeholder="E-mail ou telefone" class="input-field" id="email-input" required>
+                    <input type="password" placeholder="Senha" class="input-field" id="password-input" required>
+                    <button type="button" class="login-button" id="enter-input">Entrar</button>
                 </form>
                 <div class="forgot-password">
                     <a href="#">Esqueceu a senha?</a>
@@ -30,6 +30,32 @@
             </div>
         </div>
     </div>
-    <script src="login.js"></script>
+    <script>
+        const emailButton = document.querySelector("#email-input");
+        const passwordButton = document.querySelector("#password-input");
+        const loginButton = document.querySelector("#enter-input");
+
+        async function login(email, password) {
+            try {
+                await fetch("/users", {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        email:  email, 
+                        password: password
+                    })
+                });
+                console.log("deu certo");
+            }catch(error) {
+                console.log(error);
+            }
+        }
+
+        loginButton.addEventListener("click", async () => {
+            login(emailButton.value, passwordButton.value);
+        })
+    </script>
+    <!-- <script src="login.js"></script> -->
 </body>
 </html>
