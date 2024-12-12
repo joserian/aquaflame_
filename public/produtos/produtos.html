@@ -451,56 +451,77 @@
 
 
     <script>
-        const carrinho = [];
-        const numeroWhatsApp = "5592995185056"; // Substitua pelo número do WhatsApp do proprietário
+             
+const carrinho = [];
+const numeroWhatsApp = "5592995185056"; 
 
-        function adicionarAoCarrinho(nome, tamanho, preco, idQuantidade) {
-            const quantidade = parseInt(document.getElementById(idQuantidade).value);
-            if (quantidade < 1) {
-                alert("Por favor, selecione uma quantidade válida.");
-                return;
-            }
-            const item = { nome, tamanho, preco, quantidade };
-            carrinho.push(item);
-           // alert(`${quantidade} de ${nome} (${tamanho}) adicionado ao carrinho!`);
-            mostrarCarrinho();
-        }
+function adicionarAoCarrinho(nome, tamanho, preco, idQuantidade) {
+    const quantidade = parseInt(document.getElementById(idQuantidade).value);
+    if (quantidade < 1) {
+        alert("Por favor, selecione uma quantidade válida.");
+        return;
+    }
+    const item = { nome, tamanho, preco, quantidade };
+    carrinho.push(item);
+    mostrarCarrinho();
+}
 
-        function mostrarCarrinho() {
-            const listaCarrinho = document.getElementById("listaCarrinho");
-            listaCarrinho.innerHTML = ""; // Limpar lista existente
-            carrinho.forEach(item => {
-                const li = document.createElement("li");
-                li.textContent = `${item.quantidade} ${item.nome} ${item.tamanho} - R$ ${(item.preco * item.quantidade).toFixed(2)}`;
-                listaCarrinho.appendChild(li);
-            });
-        }
+function removerDoCarrinho(index) {
+    carrinho.splice(index, 1); 
+    mostrarCarrinho(); 
+}
 
-        function enviarWhatsApp() {
-            if (carrinho.length === 0) {
-                alert("Seu carrinho está vazio!");
-                return;
-            }
-            // Capturar o endereço no momento do envio
-            const enderecoCliente = document.getElementById("enderecoCliente").value;
-            if (!enderecoCliente) {
-                alert("Por favor, insira seu endereço.");
-                return;
-            }
-            let mensagem = "Olá! Gostaria de fazer meu Pedido:\n";
-            carrinho.forEach(item => {
-                mensagem += `${item.quantidade} ${item.nome} ${item.tamanho} - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
-            });
-            mensagem += `endereço para entrega: ${enderecoCliente}`;
-            const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensagem)}`;
+function mostrarCarrinho() {
+    const listaCarrinho = document.getElementById("listaCarrinho");
+    listaCarrinho.innerHTML = ""; // Limpar lista existente
+    carrinho.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.style.display = "flex"
+        li.style.alignItems = "center"
+        li.textContent = `${item.quantidade} ${item.nome} ${item.tamanho} - R$ ${(item.preco * item.quantidade).toFixed(2)}`;
+        
+        // Criando botão de remover 
+        const btnRemover = document.createElement("button");
+    
+        btnRemover.classList.add("btn-remover")
+        const img = document.createElement("img")
+        img.src = "../assets/lixeira.png"
+        img.classList.add("icon")
+        btnRemover.appendChild(img)
+        btnRemover.onclick = () => removerDoCarrinho(index); 
+        
+        
+        li.appendChild(btnRemover) 
+        listaCarrinho.appendChild(li)
+      
 
-            // Redirecionar para o WhatsApp
-            window.open(linkWhatsApp);
 
-            // Limpar o carrinho
-            carrinho.length = 0; // Limpa o carrinho
-            mostrarCarrinho(); // Atualiza a lista do carrinho
-        }
+    })
+}
+
+
+
+function enviarWhatsApp() {
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+    const enderecoCliente = document.getElementById("enderecoCliente").value;
+    if (!enderecoCliente) {
+        alert("Por favor, insira seu endereço.");
+        return;
+    }
+    let mensagem = "Olá! Gostaria de fazer meu Pedido:\n";
+    carrinho.forEach(item => {
+        mensagem += `${item.quantidade} ${item.nome} ${item.tamanho} - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
+    });
+    mensagem += `endereço para entrega: ${enderecoCliente}`;
+    const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensagem)}`;
+
+    window.open(linkWhatsApp);
+    carrinho.length = 0
+    mostrarCarrinho()
+}
     </script>
 </body>
 </html>
