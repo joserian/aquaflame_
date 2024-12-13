@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="redefinir.css">
+    <title>Redefinição</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="left-container">
+           
+            <div class="login-box">
+                <form action=".">
+                    <h1 class="title">Digite o codigo de Validação de E-mail.</h1>
+                    <input type="number" class="input-field" id="numero" name="numero" maxlength="6" oninput="this.value = this.value.slice(0, 6)" pattern="\d*" title="Somente números são permitidos" required placeholder="Digíte seu código">
+                  
+                   
+                    <button type="button" class="login-button" id="enter-input">Confirmar código</button>
+
+                    <br> <br> <br> 
+
+                    <h1 class="title">Digite sua nova senha.</h1>
+                    <input type="text" placeholder="Senha" class="input-field" id="email-input" required>                  
+                    <button type="button" class="login-button" id="enter-input">Enviar</button>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+</body>
+</html>
